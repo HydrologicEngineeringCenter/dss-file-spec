@@ -44,7 +44,7 @@ namespace Hec.DssInternal
             {
                using (BinaryReader r = new BinaryReader(stream, Encoding.UTF8))
                {
-                  fileHeader = new Decoder(r.ReadBytes(100));
+                  fileHeader = new Decoder(r.ReadBytes(100)); // todo header size is in the file
 
                   // TO Do.   catalog. read pathname bin
                   // zcatalogInternal.c -- need some keys.

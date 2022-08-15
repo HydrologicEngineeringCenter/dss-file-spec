@@ -2,6 +2,12 @@
 // See https://aka.ms/new-console-template for more information
 
 
-DssFile dss = new DssFile(@"c:\tmp\workout.dss");
+if( args.Length !=1)
+{
+   Console.WriteLine("Usage: dss-cmd file.dss");
+   return;
+}
+
+DssFile dss = new DssFile(args[0]);
 dss.PrintInfo();
 

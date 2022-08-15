@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "dss-cmd": {
+      "commandName": "Project",
+      "commandLineArgs": "c:\\tmp\\workout.dss"
+    }
+  }
+}
