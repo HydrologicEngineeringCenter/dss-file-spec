@@ -1,0 +1,9 @@
+/RedFox RedFox/0/FLOW/01Jan2000/10Second/GATE/
+
+Table Hash: 8182
+Hash:  3794281770676537607
+
+Hash Address: 8360
+Bin Address: 10772
+Info Address: 16273
+Data Address: 16322

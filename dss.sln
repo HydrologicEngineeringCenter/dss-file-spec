@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32228.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dss-file-spec", "dss\dss.csproj", "{5CA64D37-9881-41E0-ABE8-05831CC1A3E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dss", "dss\dss.csproj", "{5CA64D37-9881-41E0-ABE8-05831CC1A3E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dss-cmd", "dss-cmd\dss-cmd.csproj", "{27392070-B416-48B2-A02D-9E3555143086}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dss-cmd", "dss-cmd\dss-cmd.csproj", "{27392070-B416-48B2-A02D-9E3555143086}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{FC3181D4-04F3-4B46-AB60-597D565C543B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{27392070-B416-48B2-A02D-9E3555143086}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27392070-B416-48B2-A02D-9E3555143086}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27392070-B416-48B2-A02D-9E3555143086}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC3181D4-04F3-4B46-AB60-597D565C543B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC3181D4-04F3-4B46-AB60-597D565C543B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC3181D4-04F3-4B46-AB60-597D565C543B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC3181D4-04F3-4B46-AB60-597D565C543B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

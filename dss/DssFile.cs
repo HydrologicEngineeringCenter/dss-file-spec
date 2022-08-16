@@ -11,12 +11,13 @@ namespace Hec.DssInternal
    {
       String fileName;
       Decoder fileHeader = new Decoder(new byte[0]);
+      Decoder tableHash = new Decoder(new byte[0]);   
       DssFileKeys keys;
       public DssFile(String fileName)
       {
          this.fileName = fileName;
          keys = new DssFileKeys();
-         ReadHeader();
+         ReadFileHeader();
          if (!Valid())
             throw new Exception("Invalid DSS file");
       }
@@ -32,11 +33,30 @@ namespace Hec.DssInternal
       public void PrintInfo()
       {
          // permanantSection[keys.kfileSize] 
-         Console.WriteLine("file header size = " + fileHeader.Integer(keys.kfileHeaderSize));
-         Console.WriteLine("number of records = " + fileHeader.Long(keys.knumberRecords));
+
+         //       binAddress = fileHeader[zdssFileKeys.kaddFirstBin];
+         //     pathnameBin = (long long*)ifltab[zdssKeys.kpathBin];
+         double mbytes = fileHeader.Long(keys.kfileSize) * 8.0 / 1024.0/1024.0;
+
+         Console.WriteLine("                        Number records:         "+ fileHeader.Long(keys.knumberRecords));
+         Console.WriteLine("                        File size:              " + fileHeader.Long(keys.kfileSize) + " 64-bit words");
+         Console.WriteLine("                        File size:              " + mbytes.ToString("f1") + " Mb");
+         Console.WriteLine("                        Dead space:             " + fileHeader.Long(keys.kdead));
+         Console.WriteLine("                        Hash range:             " + fileHeader.Long(keys.kmaxHash));
+         Console.WriteLine("                        Number hash used:       " + fileHeader.Long(keys.khashsUsed));
+         Console.WriteLine("                        Max paths for hash:     " + fileHeader.Long(keys.kmaxPathsOneHash));
+         Console.WriteLine("                        Corresponding hash:     " + fileHeader.Long(keys.kmaxPathsHashCode));
+         Console.WriteLine("                        Number non unique hash: " + fileHeader.Long(keys.khashCollisions));
+         Console.WriteLine("                        Number bins used:       " + fileHeader.Long(keys.ktotalBins));
+         Console.WriteLine("                        Number overflow bins:   " + fileHeader.Long(keys.kbinsOverflow));
+         //Console.WriteLine("                        Number physical reads:  " + ifltab.Long(keys.knumberReads));
+         //Console.WriteLine("                        Number physical writes: " + ifltab.Long(keys.knumberWrites));
+         //Console.WriteLine("                        Number denied locks:    " + ifltab.Long(keys.klocksDenied));
+         Console.WriteLine("                        address of first bin:   " + fileHeader.Long(keys.kaddFirstBin));
+         Console.WriteLine("                        start of hash table :   " + fileHeader.Long(keys.kaddHashTableStart));
 
       }
-      void ReadHeader()
+      void ReadFileHeader()
       {
          if (File.Exists(fileName))
          {
@@ -44,8 +64,13 @@ namespace Hec.DssInternal
             {
                using (BinaryReader r = new BinaryReader(stream, Encoding.UTF8))
                {
-                  fileHeader = new Decoder(r.ReadBytes(100)); // todo header size is in the file
+                  int headerSize = 100 * 8;
+                  fileHeader = new Decoder(r.ReadBytes(headerSize)); // todo read header size from near beginning of file.
 
+                  // load the hash table into memory.
+                  long hashSize = fileHeader.Long(keys.kmaxHash);
+                  r.BaseStream.Seek(fileHeader.Long(keys.kaddHashTableStart), SeekOrigin.Begin);
+                  tableHash = new Decoder(r.ReadBytes((int)hashSize * 8));
                   // TO Do.   catalog. read pathname bin
                   // zcatalogInternal.c -- need some keys.
                   //binAddress = fileHeader[zdssFileKeys.kaddFirstBin];
