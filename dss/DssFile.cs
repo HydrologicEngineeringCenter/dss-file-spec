@@ -19,19 +19,24 @@ namespace Hec.DssInternal
       {
          this.fileName = fileName;
          keys = new DssFileKeys();
-         ReadFileHeader();
-         if (!Valid())
-            throw new Exception("Invalid DSS file");
+         var word = new Decoder(ReadBytes(0, 1));
+         var s = word.String(0, Constants.DSS_FILE_KEY.Length);
+         if(s != Constants.DSS_FILE_KEY)
+            throw new Exception("Invalid DSS file.  File must start with :"+Constants.DSS_FILE_KEY);
+
+         word = new Decoder(ReadBytes(1, 1));
+         int headerSize = word.Integer(0);
+         if( headerSize != 100)
+            throw new Exception("Invalid DSS version 7 file.  Expected Header size of 100");
+
+         fileHeader = new Decoder(ReadBytes(0,headerSize));
+
+         int hashSize = (int)fileHeader.Long(keys.kmaxHash);
+         long addHashTableStart = fileHeader.Long(keys.kaddHashTableStart);
+         tableHash = new Decoder(ReadBytes(addHashTableStart,hashSize));
+
       }
 
-       bool Valid()
-      {
-         if (fileHeader.Length == 0 ) 
-            return false;
-         var z = fileHeader.String(keys.kdss, Constants.DSS_FILE_KEY.Length);
-         
-         return z == Constants.DSS_FILE_KEY;
-      }
       public void PrintInfo()
       {
          // permanantSection[keys.kfileSize] 
@@ -64,36 +69,32 @@ namespace Hec.DssInternal
          // TO DO. create Record class to do the read.
          DssHash h = new DssHash(path);
          var maxHash = (int)fileHeader.Long(keys.kmaxHash);
-         var addressToHash = h.TableHash(maxHash);// +fileHeader.Long(keys.kaddHashTableStart);
+         var addressToHash = h.TableHash(maxHash);
          var address = tableHash.Long(addressToHash);
          Console.WriteLine("bin address:"+address);
+         int binSize = (int)fileHeader.Long(keys.kbinSize);
+         ReadBytes(address, binSize);
+         Console.WriteLine(  binSize);
+         //var pathnameBin = new Decoder()
       }
-      void ReadFileHeader()
+
+      byte[] ReadBytes(long wordOffset, int wordCount)
       {
+         byte[] rval = new byte[0];
+
          if (File.Exists(fileName))
          {
             using (var stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
             {
                using (BinaryReader r = new BinaryReader(stream, Encoding.UTF8))
                {
-                  int headerSize = 100 * 8;
-                  fileHeader = new Decoder(r.ReadBytes(headerSize)); // todo read header size from near beginning of file.
-
-                  // load the hash table into memory.
-                  long hashSize = fileHeader.Long(keys.kmaxHash);
-                  long addHashTableStart = fileHeader.Long(keys.kaddHashTableStart);
-                  r.BaseStream.Seek(addHashTableStart*8, SeekOrigin.Begin);
-                  tableHash = new Decoder(r.ReadBytes((int)hashSize * 8));
-                  // TO Do.   catalog. read pathname bin
-                  // zcatalogInternal.c -- need some keys.
-                  //binAddress = fileHeader[zdssFileKeys.kaddFirstBin];
-                  // binAddress = 9732
-
-
+                  r.BaseStream.Seek(wordOffset * 8, SeekOrigin.Begin);
+                  rval = r.ReadBytes(wordCount*8);
                }
             }
          }
-
+         return rval;
       }
+
    }
 }
