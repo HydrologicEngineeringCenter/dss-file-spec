@@ -11,6 +11,8 @@ namespace Hec.DssInternal
    {
       String fileName;
       Decoder fileHeader = new Decoder(new byte[0]);
+
+
       Decoder tableHash = new Decoder(new byte[0]);   
       DssFileKeys keys;
       public DssFile(String fileName)
@@ -56,6 +58,16 @@ namespace Hec.DssInternal
          Console.WriteLine("                        start of hash table :   " + fileHeader.Long(keys.kaddHashTableStart));
 
       }
+
+      public void PrintRecord(string path)
+      {
+         // TO DO. create Record class to do the read.
+         DssHash h = new DssHash(path);
+         var maxHash = (int)fileHeader.Long(keys.kmaxHash);
+         var addressToHash = h.TableHash(maxHash);// +fileHeader.Long(keys.kaddHashTableStart);
+         var address = tableHash.Long(addressToHash);
+         Console.WriteLine("bin address:"+address);
+      }
       void ReadFileHeader()
       {
          if (File.Exists(fileName))
@@ -69,7 +81,8 @@ namespace Hec.DssInternal
 
                   // load the hash table into memory.
                   long hashSize = fileHeader.Long(keys.kmaxHash);
-                  r.BaseStream.Seek(fileHeader.Long(keys.kaddHashTableStart), SeekOrigin.Begin);
+                  long addHashTableStart = fileHeader.Long(keys.kaddHashTableStart);
+                  r.BaseStream.Seek(addHashTableStart*8, SeekOrigin.Begin);
                   tableHash = new Decoder(r.ReadBytes((int)hashSize * 8));
                   // TO Do.   catalog. read pathname bin
                   // zcatalogInternal.c -- need some keys.

@@ -2,7 +2,8 @@
   "profiles": {
     "dss-cmd": {
       "commandName": "Project",
-      "commandLineArgs": "c:\\tmp\\workout.dss"
+      "commandLineArgs": "workout.dss \"/testing/timeseries/Flow/01Jan1900/1Day/series0/\"",
+      "workingDirectory": "C:\\project\\dss-file-spec\\data"
     }
   }
 }

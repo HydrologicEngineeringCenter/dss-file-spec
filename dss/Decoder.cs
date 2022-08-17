@@ -22,13 +22,13 @@ namespace Hec.DssInternal
          var rval = System.Text.Encoding.ASCII.GetString(data, word, length);
          return rval; 
       }
-      public int Integer(int word)
+      public int Integer(long word)
       {
-         return BitConverter.ToInt32(data, word*8);
+         return BitConverter.ToInt32(data,(int) word*8);
       }
-      public long Long(int word)
+      public long Long(long word)
       {
-         return BitConverter.ToInt64(data, word * 8);
+         return BitConverter.ToInt64(data,(int) word * 8);
       }
    }
 }
