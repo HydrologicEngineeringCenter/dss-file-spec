@@ -16,19 +16,25 @@ namespace Hec.DssInternal
       public int Length {
          get { return data.Length; }
       }
-      public string String(int word,int length)
+      public string String(int word,int count, int wordSize=8)
       {
          //var z =BitConverter.ToString(permanantSection, keys.kdss, 4);
-         var rval = System.Text.Encoding.ASCII.GetString(data, word, length);
+         var rval = System.Text.Encoding.ASCII.GetString(data, word*wordSize, count);
          return rval; 
       }
-      public int Integer(long word)
+      public int Integer(long word, int wordSize=8)
       {
-         return BitConverter.ToInt32(data,(int) word*8);
+         return BitConverter.ToInt32(data,(int) word*wordSize);
       }
-      public long Long(long word)
+      public (int ,int) Integers(long word, int wordSize = 8)
       {
-         return BitConverter.ToInt64(data,(int) word * 8);
+         var a = BitConverter.ToInt32(data, (int)word * wordSize);
+         var b = BitConverter.ToInt32(data, (int)word * wordSize + 4);
+         return (a, b);
+      }
+      public long Long(long word, int wordSize =8)
+      {
+         return BitConverter.ToInt64(data,(int) word*wordSize );
       }
    }
 }

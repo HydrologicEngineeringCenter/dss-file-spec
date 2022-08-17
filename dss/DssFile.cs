@@ -73,7 +73,8 @@ namespace Hec.DssInternal
          var address = tableHash.Long(addressToHash);
          Console.WriteLine("bin address:"+address);
          int binSize = (int)fileHeader.Long(keys.kbinSize);
-         ReadBytes(address, binSize);
+
+         var bin = new DssBin(ReadBytes(address, binSize));
          Console.WriteLine(  binSize);
          //var pathnameBin = new Decoder()
       }
