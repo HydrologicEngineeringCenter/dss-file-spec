@@ -83,14 +83,21 @@ namespace Hec.DssInternal
       {
          byte[] rval = new byte[0];
 
-         if (File.Exists(fileName))
+         if (fileName.StartsWith("s3:"))
          {
-            using (var stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
+            // read from AWS/S3
+         }
+         else
+         {
+            if (File.Exists(fileName))
             {
-               using (BinaryReader r = new BinaryReader(stream, Encoding.UTF8))
+               using (var stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
                {
-                  r.BaseStream.Seek(wordOffset * 8, SeekOrigin.Begin);
-                  rval = r.ReadBytes(wordCount*8);
+                  using (BinaryReader r = new BinaryReader(stream, Encoding.UTF8))
+                  {
+                     r.BaseStream.Seek(wordOffset * 8, SeekOrigin.Begin);
+                     rval = r.ReadBytes(wordCount * 8);
+                  }
                }
             }
          }
