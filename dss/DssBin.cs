@@ -8,7 +8,6 @@ namespace Hec.DssInternal
 {
    internal class DssBin
    {
-      enum BinStatus { Unused=0,Good=1, Alias=2, Deleted=11, Renamed=12};
 
       /*zdssBinKeys.kbinHash = 0;
       zdssBinKeys.kbinStatus = 1;
@@ -34,7 +33,7 @@ namespace Hec.DssInternal
       {
          //TO DO loop until path matches.
          long pathHash = decoder.Long(0);
-         BinStatus status = (BinStatus)decoder.Integer(1);
+         RecordStatus status = (RecordStatus)decoder.Integer(1);
          (int numChars, int size) = decoder.Integers(2);
          var infoAddress = decoder.Long(3);
          (int dataType, int sortSequence) = decoder.Integers(4);

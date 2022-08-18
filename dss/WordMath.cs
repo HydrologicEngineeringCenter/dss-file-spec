@@ -10,7 +10,12 @@ namespace Hec.DssInternal
    {
       public static int WordsInString(String s)
       {
-         return ((s.Length - 1) / 8) + 1;
+         return StringLengthToWords(s.Length);
+      }
+
+      internal static int StringLengthToWords(int length)
+      {
+         return ((length - 1) / 8) + 1;
       }
    }
 }

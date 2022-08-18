@@ -36,6 +36,11 @@ namespace Hec.DssInternal
       {
          return BitConverter.ToInt64(data,(int) word*wordSize );
       }
+      
+      public AddressInfo GetAddressInfo(long wordAddress, long wordSize)
+      {
+         return new AddressInfo(Long(wordAddress),(int)Long(wordSize));
+      }
 
       public DateTime DateTime(long word, int wordSize = 8)
       {

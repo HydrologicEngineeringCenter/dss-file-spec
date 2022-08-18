@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace Hec.DssInternal
 {
-  class Constants
+   enum RecordStatus { Unused = 0, Good = 1, Alias = 2, Deleted = 11, Renamed = 12 };
+
+   class Constants
   {
+      internal const int MAX_PROGRAM_NAME_LENGTH = 16;
     internal const int MAX_LEN_ERROR_MESS = 500;
     internal const int DSS_END_HEADER_FLAG = -97531;
     internal const int DSS_END_FILE_FLAG = -97532;
