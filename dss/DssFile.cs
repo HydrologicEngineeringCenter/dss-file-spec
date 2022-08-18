@@ -77,9 +77,10 @@ namespace Hec.DssInternal
          var bin = new PathnameBin(ReadBytes(address, binSize));
          
          int infoSize = 30;
-         var infoAddress = bin.GetInfoAddress(path);
+         var binItem = bin.FindBinItem(path);
+
          int wordstoRead = infoSize + WordMath.WordsInString(path);
-         var info = new Decoder(ReadBytes(infoAddress, infoSize));
+         var info = new Decoder(ReadBytes(binItem.InfoAddress, infoSize));
          
 
          Console.WriteLine(  binSize);

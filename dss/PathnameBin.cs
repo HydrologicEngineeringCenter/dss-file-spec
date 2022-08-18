@@ -29,7 +29,7 @@ namespace Hec.DssInternal
       }
 
 
-      public long GetInfoAddress(string pathname)
+      public BinItem FindBinItem(string pathname)
       {
          //TO DO loop until path matches.
          long pathHash = decoder.Long(0);
@@ -40,7 +40,6 @@ namespace Hec.DssInternal
          DateTime lastWriteTime = decoder.DateTime(5);
          (int startJulian, int endJulian) = decoder.Integers(6);
          string path = decoder.String(7, numChars);
-         var remainder = numChars % 8; // find remainder to be multiple of 8
          
          int pathWords = WordMath.WordsInString(path);
          long nextPathnameHash = decoder.Long(8 + pathWords);
@@ -57,9 +56,11 @@ namespace Hec.DssInternal
          Console.WriteLine("julian end: " + endJulian);
          Console.WriteLine("pathname: " + path);
          Console.WriteLine("next pathname hash: " + nextPathnameHash);
-
          // TO Do path must match pathname
-         return infoAddress;
+
+         var item = new BinItem(pathHash, status, numChars, size, infoAddress, dataType, sortSequence, lastWriteTime, startJulian, endJulian, nextPathnameHash);
+
+         return item;
       }
    }
 }
