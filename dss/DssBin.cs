@@ -32,7 +32,7 @@ namespace Hec.DssInternal
          (int numChars, int size) = d.Integers(2);
          var infoAddress = d.Long(3);
          (int dataType, int sortSequence) = d.Integers(4);
-         long laswWriteTime = d.Long(5); // TO DO.  add d.DateTime(5)
+         DateTime laswWriteTime = d.DateTime(5);
          (int startJulian, int endJulian) = d.Integers(6);
          string pathname = d.String(7,numChars);
          long nextPathnameHash = d.Long(8);

@@ -36,5 +36,13 @@ namespace Hec.DssInternal
       {
          return BitConverter.ToInt64(data,(int) word*wordSize );
       }
+
+      public DateTime DateTime(long word, int wordSize = 8)
+      {
+          long julianDate = Long(word, wordSize);
+          DateTime baseDate = new DateTime(1970, 1, 1);
+          DateTime date = baseDate.AddMilliseconds(julianDate);
+          return date;
+      }
    }
 }
