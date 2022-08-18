@@ -75,6 +75,12 @@ namespace Hec.DssInternal
          int binSize = (int)fileHeader.Long(keys.kbinSize);
 
          var bin = new DssBin(ReadBytes(address, binSize));
+         int infoSize = 30;
+         var infoAddress = bin.GetInfoAddress(path);
+         int wordstoRead = infoSize + WordMath.WordsInString(path);
+         var info = new Decoder(ReadBytes(infoAddress, infoSize));
+         
+
          Console.WriteLine(  binSize);
          //var pathnameBin = new Decoder()
       }

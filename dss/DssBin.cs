@@ -23,33 +23,44 @@ namespace Hec.DssInternal
       //  Do not change this value - it is critical.
       zdssBinKeys.kbinSize = zdssBinKeys.kbinPath - zdssBinKeys.kbinHash;
       */
+      private Decoder decoder;
       public DssBin(byte[] data)
       {
-         Decoder d = new Decoder(data);
+         decoder = new Decoder(data);
+      }
 
-         long pathHash =d.Long(0);
-         BinStatus status =(BinStatus) d.Integer(1);
-         (int numChars, int size) = d.Integers(2);
-         var infoAddress = d.Long(3);
-         (int dataType, int sortSequence) = d.Integers(4);
-         DateTime laswWriteTime = d.DateTime(5);
-         (int startJulian, int endJulian) = d.Integers(6);
-         string pathname = d.String(7,numChars);
-         long nextPathnameHash = d.Long(8);
+
+      public long GetInfoAddress(string pathname)
+      {
+         //TO DO loop until path matches.
+         long pathHash = decoder.Long(0);
+         BinStatus status = (BinStatus)decoder.Integer(1);
+         (int numChars, int size) = decoder.Integers(2);
+         var infoAddress = decoder.Long(3);
+         (int dataType, int sortSequence) = decoder.Integers(4);
+         DateTime lastWriteTime = decoder.DateTime(5);
+         (int startJulian, int endJulian) = decoder.Integers(6);
+         string path = decoder.String(7, numChars);
+         var remainder = numChars % 8; // find remainder to be multiple of 8
          
-         Console.WriteLine("pathHash:" +pathHash);
-         Console.WriteLine("status: " + status.ToString());
-         Console.WriteLine("numChars:" +numChars);
-         Console.WriteLine("size: "+size);
-         Console.WriteLine("info address: "+infoAddress);
-         Console.WriteLine("data type: "+dataType);
-         Console.WriteLine("sort sequence: "+sortSequence);
-         Console.WriteLine("lastwrite: "+ laswWriteTime);
-         Console.WriteLine("julian start: " + startJulian);
-         Console.WriteLine("julian end: "+endJulian);
-         Console.WriteLine("pathname: "+pathname);
-         Console.WriteLine("next pathname hash: "+nextPathnameHash);
+         int pathWords = WordMath.WordsInString(path);
+         long nextPathnameHash = decoder.Long(8 + pathWords);
 
+         Console.WriteLine("pathHash:" + pathHash);
+         Console.WriteLine("status: " + status.ToString());
+         Console.WriteLine("numChars:" + numChars);
+         Console.WriteLine("size: " + size);
+         Console.WriteLine("info address: " + infoAddress);
+         Console.WriteLine("data type: " + dataType);
+         Console.WriteLine("sort sequence: " + sortSequence);
+         Console.WriteLine("lastwrite: " + lastWriteTime);
+         Console.WriteLine("julian start: " + startJulian);
+         Console.WriteLine("julian end: " + endJulian);
+         Console.WriteLine("pathname: " + path);
+         Console.WriteLine("next pathname hash: " + nextPathnameHash);
+
+         // TO Do path must match pathname
+         return infoAddress;
       }
    }
 }
