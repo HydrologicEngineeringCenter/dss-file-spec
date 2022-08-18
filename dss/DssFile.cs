@@ -74,7 +74,8 @@ namespace Hec.DssInternal
          Console.WriteLine("bin address:"+address);
          int binSize = (int)fileHeader.Long(keys.kbinSize);
 
-         var bin = new DssBin(ReadBytes(address, binSize));
+         var bin = new PathnameBin(ReadBytes(address, binSize));
+         
          int infoSize = 30;
          var infoAddress = bin.GetInfoAddress(path);
          int wordstoRead = infoSize + WordMath.WordsInString(path);

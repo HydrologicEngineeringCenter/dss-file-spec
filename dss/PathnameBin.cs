@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hec.DssInternal
 {
-   internal class DssBin
+   internal class PathnameBin
    {
 
       /*zdssBinKeys.kbinHash = 0;
@@ -23,7 +23,7 @@ namespace Hec.DssInternal
       zdssBinKeys.kbinSize = zdssBinKeys.kbinPath - zdssBinKeys.kbinHash;
       */
       private Decoder decoder;
-      public DssBin(byte[] data)
+      public PathnameBin(byte[] data)
       {
          decoder = new Decoder(data);
       }
