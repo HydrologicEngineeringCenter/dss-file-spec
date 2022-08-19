@@ -64,30 +64,35 @@ namespace Hec.DssInternal
 
       }
 
-      public void PrintRecord(string path)
-      {
-         // TO DO. create Record class to do the read.
-         DssHash h = new DssHash(path);
-         var maxHash = (int)fileHeader.Long(keys.kmaxHash);
-         var addressToHash = h.TableHash(maxHash);
-         var address = tableHash.Long(addressToHash);
-         Console.WriteLine("bin address:"+address);
-         int binSize = (int)fileHeader.Long(keys.kbinSize);
+        public void PrintRecord(string path)
+        {
+            // TO DO. create Record class to do the read.
+            DssHash h = new DssHash(path);
+            var maxHash = (int)fileHeader.Long(keys.kmaxHash);
+            var addressToHash = h.TableHash(maxHash);
+            var address = tableHash.Long(addressToHash);
+            Console.WriteLine("bin address:" + address);
+            int binSize = (int)fileHeader.Long(keys.kbinSize);
+            var bin = new PathnameBin(ReadBytes(address, binSize));
+            var binItem = bin.FindBinItem(path);
 
-         var bin = new PathnameBin(ReadBytes(address, binSize));
-         
-         int infoSize = 30;
-         var binItem = bin.FindBinItem(path);
+            int wordstoRead = RecordInfo.infoSize + WordMath.WordsInString(path);
+            RecordInfo info = new RecordInfo(ReadBytes(binItem.InfoAddress, wordstoRead));
+            AddressInfo valueAddressInfo = info.Values1Address;
+            int numValues = info.NumberOfValues;
+            long valueAddress = valueAddressInfo.Address;
+            byte[] data = ReadBytes(valueAddress, numValues);
+            Decoder d = new Decoder(data);
+            for (int i = 0; i < numValues; i++)
+            {
+                Console.WriteLine(d.Float(i));
+            }
 
-         int wordstoRead = infoSize + WordMath.WordsInString(path);
-         var info = new Decoder(ReadBytes(binItem.InfoAddress, infoSize));
-         
+            Console.WriteLine(binSize);
+            //var pathnameBin = new Decoder()
+        }
 
-         Console.WriteLine(  binSize);
-         //var pathnameBin = new Decoder()
-      }
-
-      byte[] ReadBytes(long wordOffset, int wordCount)
+      byte[] ReadBytes(long wordOffset, int wordCount, int wordSize = 8)
       {
          byte[] rval = new byte[0];
 
@@ -103,8 +108,8 @@ namespace Hec.DssInternal
                {
                   using (BinaryReader r = new BinaryReader(stream, Encoding.UTF8))
                   {
-                     r.BaseStream.Seek(wordOffset * 8, SeekOrigin.Begin);
-                     rval = r.ReadBytes(wordCount * 8);
+                     r.BaseStream.Seek(wordOffset * wordSize, SeekOrigin.Begin);
+                     rval = r.ReadBytes(wordCount * wordSize);
                   }
                }
             }

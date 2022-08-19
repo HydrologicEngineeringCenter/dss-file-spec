@@ -37,7 +37,7 @@ namespace Hec.DssInternal
          (int numChars, int size) = decoder.Integers(2);
          var infoAddress = decoder.Long(3);
          (int dataType, int sortSequence) = decoder.Integers(4);
-         DateTime lastWriteTime = decoder.DateTime(5);
+         DateTime lastWriteTime = decoder.UnixEpochDateTime(5);
          (int startJulian, int endJulian) = decoder.Integers(6);
          string path = decoder.String(7, numChars);
          

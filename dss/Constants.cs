@@ -9,6 +9,8 @@ namespace Hec.DssInternal
 {
    enum RecordStatus { Unused = 0, Good = 1, Alias = 2, Deleted = 11, Renamed = 12 };
 
+    enum RecordType { RegularTimeSeries = 100, IrregularTimeSeries = 110 }
+
    class Constants
   {
       internal const int MAX_PROGRAM_NAME_LENGTH = 16;
