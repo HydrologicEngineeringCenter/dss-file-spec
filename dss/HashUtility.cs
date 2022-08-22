@@ -6,20 +6,13 @@ using System.Threading.Tasks;
 
 namespace Hec.DssInternal
 {
-   internal class DssHash
+   internal class HashUtility
    {
-      string pathname;
-      public DssHash(string path)
-      {
-         this.pathname = path.ToUpper();
-
-      }
-
-      public long TableHash(int maxHash)
+      public static long TableHash(string pathname,int maxHash)
       {
          //string expression = ".*(c:\\d{6})|.*/$";
          //bool isCollection = path.IndexOf("/C:") >= 0;
-         var path = pathname;
+         var path = pathname.ToUpper();
          int ibit=0;
          double fraction = C.math.frexp((double)maxHash, ref ibit);
          if (fraction == 0.50)
@@ -79,9 +72,10 @@ namespace Hec.DssInternal
 
 
       }
-      public long PathHash()
+      public static long PathHash(string path)
       {
          long pathHash = 0;
+         var pathname = path.ToUpper();
          for (int i = 0; i < pathname.Length; i++)
          {
             pathHash = (31 * pathHash) + (int)pathname[i];
