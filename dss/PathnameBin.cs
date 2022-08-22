@@ -28,6 +28,12 @@ namespace Hec.DssInternal
          decoder = new Decoder(data);
       }
 
+      public BinItem[] GetBinItems()
+      {
+         List<BinItem> binItems = new List<BinItem>();   
+         
+         return binItems.ToArray();
+      } 
 
       public BinItem FindBinItem(string pathname)
       {

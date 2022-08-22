@@ -13,10 +13,7 @@ namespace Hec.DssInternal
         {
             this.data = data;
         }
-        public int Length
-        {
-            get { return data.Length; }
-        }
+       
         public string String(int word, int count, int wordSize = 8)
         {
             //var z =BitConverter.ToString(permanantSection, keys.kdss, 4);
@@ -43,7 +40,19 @@ namespace Hec.DssInternal
             return new AddressInfo(Long(wordAddress), (int)Long(wordSize));
         }
 
-        public DateTime UnixEpochDateTime(long word, int wordSize = 8)
+      internal long[] LongArray()
+      {
+         int size = data.Length / 8;
+         var result = new long[size];
+         for (int i = 0; i < size; i++)
+         {
+            var x = Long(i);
+            result[i] = x;
+         }
+         return result;
+      }
+
+      public DateTime UnixEpochDateTime(long word, int wordSize = 8)
         {
             long epochs = Long(word, wordSize);
             DateTime baseDate = new DateTime(1970, 1, 1);

@@ -9,15 +9,13 @@ namespace test
       [TestMethod]
       public void TestTableHash()
       {
-         DssHash h = new DssHash(path);
          int maxHash = 8192;
-         Assert.AreEqual(8182, h.TableHash(maxHash));
+         Assert.AreEqual(8182, HashUtility.TableHash(path,maxHash));
       }
       [TestMethod]
       public void TestPathHash()
       {
-         DssHash h = new DssHash(path);
-         Assert.AreEqual(3794281770676537607, h.PathHash());
+         Assert.AreEqual(3794281770676537607, HashUtility.PathHash(path));
       }
 
       [TestMethod]

@@ -13,7 +13,8 @@ namespace Hec.DssInternal
       Decoder fileHeader = new Decoder(new byte[0]);
 
 
-      Decoder tableHash = new Decoder(new byte[0]);   
+      Decoder tableHash = new Decoder(new byte[0]);
+      long[] fileHashTable = new long[0];
       DssFileKeys keys;
       public DssFile(String fileName)
       {
@@ -34,7 +35,16 @@ namespace Hec.DssInternal
          int hashSize = (int)fileHeader.Long(keys.kmaxHash);
          long addHashTableStart = fileHeader.Long(keys.kaddHashTableStart);
          tableHash = new Decoder(ReadBytes(addHashTableStart,hashSize));
+         fileHashTable = tableHash.LongArray();
 
+      }
+
+      public void PrintCatalog()
+      {
+         for (int i = 0; i < fileHashTable.Length; i++)
+         {
+            
+         }
       }
 
       public void PrintInfo()
@@ -67,10 +77,10 @@ namespace Hec.DssInternal
         public void PrintRecord(string path)
         {
             // TO DO. create Record class to do the read.
-            DssHash h = new DssHash(path);
             var maxHash = (int)fileHeader.Long(keys.kmaxHash);
-            var addressToHash = h.TableHash(maxHash);
-            var address = tableHash.Long(addressToHash);
+            var addressToHash = HashUtility.TableHash(path,maxHash);
+            
+            var address = fileHashTable[addressToHash];
             Console.WriteLine("bin address:" + address);
             int binSize = (int)fileHeader.Long(keys.kbinSize);
             var bin = new PathnameBin(ReadBytes(address, binSize));
