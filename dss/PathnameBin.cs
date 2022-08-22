@@ -9,43 +9,36 @@ namespace Hec.DssInternal
    internal class PathnameBin
    {
 
-      /*zdssBinKeys.kbinHash = 0;
-      zdssBinKeys.kbinStatus = 1;
-      zdssBinKeys.kbinPathLen = 2;
-      zdssBinKeys.kbinInfoAdd = 3;
-      zdssBinKeys.kbinTypeAndCatSort = 4;
-      zdssBinKeys.kbinLastWrite = 5;
-      zdssBinKeys.kbinDates = 6;
-      zdssBinKeys.kbinPath = 7;
+      const int kbinHash = 0;
+      const int kbinStatus = 1;
+      const int kbinPathLen = 2;
+      const int kbinInfoAdd = 3;
+      const int kbinTypeAndCatSort = 4;
+      const int kbinLastWrite = 5;
+      const int kbinDates = 6;
+      const int kbinPath = 7;
 
       //  the number of words used in the bin for each record, excluding the pathname
       //  Do not change this value - it is critical.
-      zdssBinKeys.kbinSize = zdssBinKeys.kbinPath - zdssBinKeys.kbinHash;
-      */
+      const int kbinSize = kbinPath - kbinHash;
       private Decoder decoder;
       public PathnameBin(byte[] data)
       {
          decoder = new Decoder(data);
       }
 
-      public BinItem[] GetBinItems()
-      {
-         List<BinItem> binItems = new List<BinItem>();   
-         
-         return binItems.ToArray();
-      } 
 
       public BinItem FindBinItem(string pathname)
       {
          //TO DO loop until path matches.
-         long pathHash = decoder.Long(0);
-         RecordStatus status = (RecordStatus)decoder.Integer(1);
-         (int numChars, int size) = decoder.Integers(2);
-         var infoAddress = decoder.Long(3);
-         (int dataType, int sortSequence) = decoder.Integers(4);
-         DateTime lastWriteTime = decoder.UnixEpochDateTime(5);
-         (int startJulian, int endJulian) = decoder.Integers(6);
-         string path = decoder.String(7, numChars);
+         long pathHash = decoder.Long(kbinHash);
+         RecordStatus status = (RecordStatus)decoder.Integer(kbinStatus);
+         (int numChars, int size) = decoder.Integers(kbinPathLen);
+         var infoAddress = decoder.Long(kbinInfoAdd);
+         (int dataType, int sortSequence) = decoder.Integers(kbinTypeAndCatSort);
+         DateTime lastWriteTime = decoder.UnixEpochDateTime(kbinLastWrite);
+         (int startJulian, int endJulian) = decoder.Integers(kbinDates);
+         string path = decoder.String(kbinPath, numChars);
          
          int pathWords = WordMath.WordsInString(path);
          long nextPathnameHash = decoder.Long(8 + pathWords);
