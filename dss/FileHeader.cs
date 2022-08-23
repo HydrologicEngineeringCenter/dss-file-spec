@@ -15,6 +15,12 @@ namespace Hec.DssInternal
          this.decoder = decoder;
       }
 
+      internal long HashTableAddress { get { return decoder.Long(keys.kaddHashTableStart); } }
+
+      internal int HashSize
+      {
+         get{ return (int)decoder.Long(keys.kmaxHash); }
+      }
       /// <summary>
       /// Size of one BinItem
       /// </summary>
@@ -22,7 +28,7 @@ namespace Hec.DssInternal
          get { return (int)decoder.Long(keys.kbinSize); } 
       }
 
-      int BinBlockSize
+      internal int BinBlockSize
       {
          get
          {

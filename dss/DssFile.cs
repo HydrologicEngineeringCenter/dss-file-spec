@@ -9,9 +9,9 @@ namespace Hec.DssInternal
 {
    public class DssFile
    {
+
       String fileName;
-      Decoder fileHeader = new Decoder(new byte[0]);
-      FileHeader fileHeader1;
+      FileHeader fileHeader;
 
       Decoder tableHash = new Decoder(new byte[0]);
       long[] fileHashTable = new long[0];
@@ -30,12 +30,9 @@ namespace Hec.DssInternal
          if( headerSize != 100)
             throw new Exception("Invalid DSS version 7 file.  Expected Header size of 100");
 
-         fileHeader = new Decoder(ReadBytes(0,headerSize));
-         fileHeader1 = new FileHeader(fileHeader);
+         fileHeader = new FileHeader(new Decoder(ReadBytes(0, headerSize)));
 
-         int hashSize = (int)fileHeader.Long(keys.kmaxHash);
-         long addHashTableStart = fileHeader.Long(keys.kaddHashTableStart);
-         tableHash = new Decoder(ReadBytes(addHashTableStart,hashSize));
+         tableHash = new Decoder(ReadBytes(fileHeader.HashTableAddress,fileHeader.HashSize));
          fileHashTable = tableHash.LongArray();
 
       }
@@ -63,14 +60,12 @@ namespace Hec.DssInternal
 
         public void PrintRecord(string path)
         {
-            // TO DO. create Record class to do the read.
-            var maxHash = (int)fileHeader.Long(keys.kmaxHash);
-            var addressToHash = HashUtility.TableHash(path,maxHash);
-            
+            var addressToHash = HashUtility.TableHash(path,fileHeader.HashSize);
+         Console.WriteLine("path bin block size: "+fileHeader.BinBlockSize);
             var address = fileHashTable[addressToHash];
             Console.WriteLine("bin address:" + address);
-         //int binSize = (int)fileHeader.Long(keys.kbinSize);
-            var bin = new PathnameBin(ReadBytes(address, fileHeader1.BinSize));
+            
+            var bin = new BinBlock(ReadBytes(address, fileHeader.BinBlockSize));
             var binItem = bin.FindBinItem(path);
 
             int wordstoRead = RecordInfo.infoSize + WordMath.WordsInString(path);
@@ -86,6 +81,8 @@ namespace Hec.DssInternal
             }
 
         }
+
+      
 
       byte[] ReadBytes(long wordOffset, int wordCount, int wordSize = 8)
       {

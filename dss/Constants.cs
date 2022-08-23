@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hec.DssInternal
 {
+   delegate byte[] ByteReader(long wordOffset, int wordCount, int wordSize = 8);
    enum RecordStatus { Unused = 0, Good = 1, Alias = 2, Deleted = 11, Renamed = 12 };
 
     enum RecordType { RegularTimeSeries = 100, IrregularTimeSeries = 110 }
