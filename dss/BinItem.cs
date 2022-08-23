@@ -20,7 +20,6 @@ namespace Hec.DssInternal
          LastWriteTime = lastWriteTime;
          StartJulian = startJulian;
          EndJulian = endJulian;
-         NextPathnameHash = nextPathnameHash;
       }
 
       public long PathHash { get; }
@@ -33,6 +32,5 @@ namespace Hec.DssInternal
       public DateTime LastWriteTime { get; }
       public int StartJulian { get; }
       public int EndJulian { get; }
-      public long NextPathnameHash { get; }
    }
 }
