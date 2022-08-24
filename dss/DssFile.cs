@@ -18,6 +18,9 @@ namespace Hec.DssInternal
       DssFileKeys keys;
       public DssFile(String fileName)
       {
+         if (!File.Exists(fileName))
+            throw new FileNotFoundException(fileName);
+
          this.fileName = fileName;
          keys = new DssFileKeys();
          var word = new Decoder(ReadBytes(0, 1));
@@ -39,14 +42,27 @@ namespace Hec.DssInternal
 
       public void PrintCatalog()
       {
+         int count = 0;
          for (int i = 0; i < fileHashTable.Length; i++)
          {
             var address = fileHashTable[i];
             if( address!=0)
-            { // look in Bin
-
+            { // get bin block at this address
+               BinBlock block = new BinBlock(address, fileHeader.BinBlockSize, ReadBytes);
+               foreach (BinItem item in block.GetBins())
+               {
+                  if (item.Valid)
+                  {
+                     item.Print();
+                     count ++;
+                  }
+                  else {
+                     break;
+                  }
+               }
             }
          }
+         Console.WriteLine("catalog count = "+count);
       }
 
       public void PrintInfo()
@@ -67,6 +83,7 @@ namespace Hec.DssInternal
             
             var bin = new BinBlock(ReadBytes(address, fileHeader.BinBlockSize));
             var binItem = bin.FindBinItem(path);
+            binItem.Print();
 
             int wordstoRead = RecordInfo.infoSize + WordMath.WordsInString(path);
             RecordInfo info = new RecordInfo(ReadBytes(binItem.InfoAddress, wordstoRead));

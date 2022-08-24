@@ -33,10 +33,12 @@ namespace Hec.DssInternal
     static int messageHandle = -1;
     static int fortranMessageUnit = -1;
 
+
     internal const int MAX_PATHNAME_LENGTH = 393;
+      internal const int MIN_PATHNAME_LENGTH = 8; // /a//////
     internal const int MAX_PATHNAME_SIZE = 394;
     internal const int MAX_PART_SIZE = 65;
-
+    
     internal const int MAX_FILENAME_LENGTH = 256;
 
 

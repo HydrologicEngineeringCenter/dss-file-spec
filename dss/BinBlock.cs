@@ -54,12 +54,13 @@ namespace Hec.DssInternal
 
       }
 
-      public BinItem FindBinItem(string pathname)
+      internal BinItem FindBinItem(string pathname)
       {
-
          foreach (BinItem item in GetBins())
          {
-            item.Print();
+            if( ( item.Status == RecordStatus.Good|| item.Status == RecordStatus.Alias )
+               && String.Compare(item.Path, pathname, StringComparison.OrdinalIgnoreCase) == 0
+               )
             return item;
          }
 
