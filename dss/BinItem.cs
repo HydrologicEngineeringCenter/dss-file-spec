@@ -23,6 +23,17 @@ namespace Hec.DssInternal
          Path = path;
          NextPathnameHash = nextPathnameHash;
       }
+
+      public bool Valid
+      {
+         get
+         {
+            return (Status == RecordStatus.Good || Status == RecordStatus.Alias)
+                  && Path.Length >= Constants.MIN_PATHNAME_LENGTH
+                  && InfoAddress > 0
+                  && DataType > 0; 
+         }
+      }  
       public void Print()
       {
          Console.WriteLine("pathHash:" + PathHash);
