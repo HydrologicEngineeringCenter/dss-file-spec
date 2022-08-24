@@ -9,7 +9,8 @@ namespace Hec.DssInternal
     internal class Decoder
     {
         byte[] data;
-        public Decoder(byte[] data)
+
+      public Decoder(byte[] data)
         {
             this.data = data;
         }
