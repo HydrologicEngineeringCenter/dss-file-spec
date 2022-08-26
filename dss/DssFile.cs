@@ -53,12 +53,12 @@ namespace Hec.DssInternal
                {
                   if (item.Valid)
                   {
-                     item.Print();
+                     Console.WriteLine(item.Path);
                      count ++;
                   }
-                  else {
-                     break;
-                  }
+                  //else {
+                   //  break;
+                 // }
                }
             }
          }

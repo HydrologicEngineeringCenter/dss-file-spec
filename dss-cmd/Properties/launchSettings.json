@@ -2,7 +2,7 @@
   "profiles": {
     "dss-cmd": {
       "commandName": "Project",
-      "commandLineArgs": "workout.dss \"/testing/timeseries/Flow/01Jan1900/1Day/series0/\"",
+      "commandLineArgs": "sample7.dss  \"//SACRAMENTO/PRECIP-INC/01Jan1877/1Day/OBS/\"",
       "workingDirectory": "C:\\project\\dss-file-spec\\data"
     }
   }
