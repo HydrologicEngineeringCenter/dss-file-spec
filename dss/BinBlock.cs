@@ -30,10 +30,6 @@ namespace Hec.DssInternal
          this.binBlockSize = binBlockSize;
          decoder = new Decoder(reader(startAddress, binBlockSize));
       }
-      public BinBlock(byte[] data)
-      {
-         decoder = new Decoder(data);
-      }
 
       public IEnumerable<BinItem> GetBins()
       {

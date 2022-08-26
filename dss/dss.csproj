@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="3.7.9.43" />
     <PackageReference Include="C.math.NET" Version="1.1.0" />
   </ItemGroup>
 

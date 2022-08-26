@@ -81,9 +81,10 @@ namespace Hec.DssInternal
             var address = fileHashTable[addressToHash];
             Console.WriteLine("bin address:" + address);
             
-            var bin = new BinBlock(ReadBytes(address, fileHeader.BinBlockSize));
+//            var bin = new BinBlock(ReadBytes(address, fileHeader.BinSize));
+            var bin = new BinBlock(address, fileHeader.BinSize, ReadBytes);
             var binItem = bin.FindBinItem(path);
-            binItem.Print();
+            //binItem.Print();
 
             int wordstoRead = RecordInfo.infoSize + WordMath.WordsInString(path);
             RecordInfo info = new RecordInfo(ReadBytes(binItem.InfoAddress, wordstoRead));
@@ -107,7 +108,9 @@ namespace Hec.DssInternal
 
          if (fileName.StartsWith("s3:"))
          {
-            // read from AWS/S3
+            // read from AWS/S3 https://hec-dss.s3.us-west-1.amazonaws.com/sample7.dss
+            // s3://hec-dss/sample7.dss
+
          }
          else
          {
