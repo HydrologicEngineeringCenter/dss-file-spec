@@ -106,11 +106,11 @@ namespace Hec.DssInternal
       {
          byte[] rval = new byte[0];
 
-         if (fileName.StartsWith("s3:"))
+         if (fileName.Contains(":"))
          {
-            // read from AWS/S3 https://hec-dss.s3.us-west-1.amazonaws.com/sample7.dss
-            // s3://hec-dss/sample7.dss
-
+            string s3BucketName = fileName.Split(':')[0];
+            string s3ObjectName = fileName.Split(':')[1];
+            rval = S3Reader.ReadBytes(s3BucketName, s3ObjectName, wordOffset, wordCount, wordSize).Result;
          }
          else
          {

@@ -3,7 +3,11 @@
     "dss-cmd": {
       "commandName": "Project",
       "commandLineArgs": "sample7.dss  \"//SACRAMENTO/PRECIP-INC/01Jan1877/1Day/OBS/\"",
-      "workingDirectory": "C:\\project\\dss-file-spec\\data"
+      "workingDirectory": "C:\\project\\dss-file-spec\\data",
+      "environmentVariables": {
+        "AWS_REGION": "us-west-1",
+        "AWS_PROFILE": "dotnet-test"
+      }
     }
   }
 }

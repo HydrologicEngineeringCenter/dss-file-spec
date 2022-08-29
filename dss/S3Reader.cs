@@ -9,19 +9,12 @@ namespace Hec.DssInternal
 {
    public class S3Reader
    {
-      private const string bucketName = "hec-dss";
-      private const string keyName = "sample7.dss";
       // Specify your bucket region (an example region is shown).
       private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USWest1;
-      private static IAmazonS3 client;
 
-      public static void S3Test()
-      {
-         client = new AmazonS3Client(bucketRegion);
-         ReadObjectDataAsync().Wait();
-      }
+  
       //https://stackoverflow.com/questions/34144494/how-can-i-get-the-bytes-of-a-getobjectresponse-from-s3
-      public static byte[] ReadStream(Stream responseStream)
+      private static byte[] ReadStream(Stream responseStream)
       {
          byte[] buffer = new byte[256];
          using (MemoryStream ms = new MemoryStream())
@@ -34,30 +27,26 @@ namespace Hec.DssInternal
             return ms.ToArray();
          }
       }
-      static async Task ReadObjectDataAsync()
+      public static async Task<byte[]> ReadBytes(string bucketName, string objectName, long wordOffset, int wordCount, int wordSize = 8)
       {
-         string responseBody = "";
+         IAmazonS3 client = new AmazonS3Client(bucketRegion);
+         var rval = new byte[0];
          try
          {
             GetObjectRequest request = new GetObjectRequest
             {
                BucketName = bucketName,
-               Key = keyName,
-               ByteRange = new ByteRange(0, (100 * 8) - 1)
+               Key = objectName,
+               ByteRange = new ByteRange(wordOffset, (wordCount * wordSize) - 1)
          };
             var size = request.ByteRange.End - request.ByteRange.Start;
             using (GetObjectResponse response = await client.GetObjectAsync(request))
-            using (Stream responseStream = response.ResponseStream)
             {
-               byte[] header = ReadStream(responseStream);
-               FileHeader h = new FileHeader(new Decoder(header));
-               for (int i = 0; i < 15; i++)
+               using (Stream responseStream = response.ResponseStream)
                {
-                  Console.WriteLine(header[i]);
+                  rval = ReadStream(responseStream);
                }
-
             }
-           
          }
          catch (AmazonS3Exception e)
          {
@@ -68,6 +57,7 @@ namespace Hec.DssInternal
          {
             Console.WriteLine("Unknown encountered on server. Message:'{0}' when reading object", e.Message);
          }
+         return rval;
       }
    }
 }
