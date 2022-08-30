@@ -10,6 +10,5 @@ if( args.Length !=2)
 
 DssFile dss = new DssFile(args[0]);
 dss.PrintCatalog();  
-dss.PrintInfo();
 dss.PrintRecord(args[1]);
 
