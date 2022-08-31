@@ -15,10 +15,13 @@ A dss file begins with a File [Header](file-header.md).
 └────────────────────────────────────────┘
 </pre>
 
-The Header is followed by the file hash array (hash table).  The hash of a pathname is the index into the hash array and the value at that index is the file address to a pathname-bin for that pathname.
+The Header is followed by the file hash array (hash table).  The hash of a pathname is the index into the hash array, and the value at that index is the file address to a pathname-bin for that pathname.
 <br>
 example: [0, 0, 0, 0, ... ,11172, ....,0,0, 10972,...  ]
 
-The [pathname bin](pathname-bins) contains meta-data for each pathname that hashes/point to that pathanme bin.  The meta-data for each bin item includes a pathname hash, status, record type, and file address to the record information.
+The [pathname bin](pathname-bins.md) contains meta-data for each pathname that hashes/point to that pathanme bin.  The meta-data for each bin item includes a pathname hash, status, record type, and file address to the record information.
+
+
+The record information is 
 
 

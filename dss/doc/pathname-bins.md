@@ -13,7 +13,7 @@ A block of two pathname bins is demonstrated below. Both pathnames below have th
 |5277|Status|1|
 |5278|Pathname length|46|
 |5278|Pathname size (int 8)|6|
-|5279|Info address|8477|
+|5279|Info address|[8477](record-info.md)|
 |5280|Data type|100|
 |5280|Catalog sort sequence|0|
 |5281|Last write time|(1545211451036)   Dec 19, 2018, 09:24:11.036|
