@@ -16,9 +16,9 @@ Record info is high level meta-data common to different data types.
 |8487|Date Last Value|(33723, 86400)   Apr 30, 1992, 24:00:00|
 |8488|Record password|    g           |
 |8490|Address Internal Header|[8513](internal-header-time-series.md)|
-|8491|Size Internal Header|21|
+|8491|Size Internal Header (ints)|21|
 |8492|Address Header 2|8524|
-|8493|Size Header 2|7|
+|8493|Size Header 2(ints)|7|
 |8494|Address User Header|8528|
 |8495|Size User Header|0|
 |8496|Address of first data area|8528|
