@@ -6,7 +6,7 @@
 |8513|Precision|2|
 |8514|Time offset, in seconds|0|
 |8514|Number Profile Depths|0|
-|8515|Block positioin of first valid value|504|
+|8515|Block position of first valid value|504|
 |8515|Block position of last valid value|719|
 |8516|Values Array length|174|
 |8516|Length of each value, ints|1|
