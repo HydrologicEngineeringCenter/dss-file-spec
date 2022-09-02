@@ -10,11 +10,14 @@ namespace Hec.Dss.IO
    {
       RecordInfo recordInfo;
       ByteReader reader;
+      TimeSeriesInternalHeader internalHeader;
       public TimeSeriesRecord(RecordInfo r, ByteReader reader)
       {
          recordInfo = r;
          this.reader = reader;
-
+         var rawInternalHeader= reader(r.InternalHeaderAddress.Address, r.InternalHeaderAddress.Size);
+         internalHeader = new TimeSeriesInternalHeader(rawInternalHeader); 
+         
         
       }
       public double[] Values

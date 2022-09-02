@@ -69,6 +69,7 @@ namespace Hec.Dss.IO
          if (info.RecordType == RecordType.RegularTimeSeries)
          {
             TimeSeriesRecord ts = new TimeSeriesRecord(info, ReadBytes);
+            
          }
       }
       RecordInfo GetRecordInfo(string path)
