@@ -1,4 +1,4 @@
-﻿using Hec.DssInternal;
+﻿using Hec.Dss.IO;
 // See https://aka.ms/new-console-template for more information
 
 
@@ -9,6 +9,6 @@ if( args.Length !=2)
 }
 
 DssFile dss = new DssFile(args[0]);
-dss.PrintCatalog();  
+//dss.PrintCatalog();  
 dss.PrintRecord(args[1]);
 

@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Hec.DssInternal
+namespace Hec.Dss.IO
 {
    public class S3Reader
    {

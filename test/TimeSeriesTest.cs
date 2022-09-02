@@ -6,15 +6,16 @@ using System;
 namespace test
 {
    [TestClass]
-   public class CatalogTest
+   public class TimeSeriesTest
    {
       [TestMethod]
-      public void TestCatalog()
+      public void Simple()
       {
          string path = Directory.GetCurrentDirectory();
          Console.WriteLine("The current directory is {0}", path);
-         DssFile dss = new DssFile("sample7.dss");
-         dss.PrintCatalog();
+         DssFile dss = new DssFile("workout.dss");
+        
+         
       }
    }
 }

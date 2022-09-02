@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Hec.DssInternal
+namespace Hec.Dss.IO
 {
    delegate byte[] ByteReader(long wordOffset, int wordCount, int wordSize = 8);
    enum RecordStatus { Unused = 0, Good = 1, Alias = 2, Deleted = 11, Renamed = 12 };

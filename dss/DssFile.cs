@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hec.DssInternal
+namespace Hec.Dss.IO
 {
    public class DssFile
    {
@@ -62,34 +62,29 @@ namespace Hec.DssInternal
          }
          Console.WriteLine("catalog count = "+count);
       }
- 
-        public void PrintRecord(string path)
+
+      public void PrintRecord(string path)
       {
          RecordInfo info = GetRecordInfo(path);
-         AddressInfo valueAddressInfo = info.Values1Address;
-         int numValues = info.NumberOfValues;
-         long valueAddress = valueAddressInfo.Address;
-         byte[] data = ReadBytes(valueAddress, numValues);
-         Decoder d = new Decoder(data);
-         for (int i = 0; i < numValues; i++)
+         if (info.RecordType == RecordType.RegularTimeSeries)
          {
-            Console.WriteLine(d.Float(i));
-         }
-
-         RecordInfo GetRecordInfo(string path)
-         {
-            var addressToHash = HashUtility.TableHash(path, fileHeader.HashSize);
-            Console.WriteLine("path bin block size: " + fileHeader.BinBlockSize);
-            var address = fileHashTable[addressToHash];
-            Console.WriteLine("bin address:" + address);
-            var bin = new BinBlock(address, fileHeader.BinSize, ReadBytes);
-            var binItem = bin.FindBinItem(path);
-
-            int wordstoRead = RecordInfo.infoSize + WordMath.WordsInString(path);
-            RecordInfo info = new RecordInfo(ReadBytes(binItem.InfoAddress, wordstoRead));
-            return info;
+            TimeSeriesRecord ts = new TimeSeriesRecord(info, ReadBytes);
          }
       }
+      RecordInfo GetRecordInfo(string path)
+      {
+         var addressToHash = HashUtility.TableHash(path, fileHeader.HashSize);
+         Console.WriteLine("path bin block size: " + fileHeader.BinBlockSize);
+         var address = fileHashTable[addressToHash];
+         Console.WriteLine("bin address:" + address);
+         var bin = new BinBlock(address, fileHeader.BinSize, ReadBytes);
+         var binItem = bin.FindBinItem(path);
+
+         int wordstoRead = RecordInfo.infoSize + WordMath.WordsInString(path);
+         RecordInfo info = new RecordInfo(ReadBytes(binItem.InfoAddress, wordstoRead));
+         return info;
+      }
+      
 
 
 
@@ -97,7 +92,7 @@ namespace Hec.DssInternal
       {
          byte[] rval = new byte[0];
 
-         if (fileName.Contains(":") && !fileName.Contains(":\\"))
+         if (fileName.Contains(':') && !fileName.Contains(":\\"))
          {
             string s3BucketName = fileName.Split(':')[0];
             string s3ObjectName = fileName.Split(':')[1];

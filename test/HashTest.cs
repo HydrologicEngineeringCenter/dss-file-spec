@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hec.DssInternal;
+using Hec.Dss.IO; 
 namespace test
 {
    [TestClass]

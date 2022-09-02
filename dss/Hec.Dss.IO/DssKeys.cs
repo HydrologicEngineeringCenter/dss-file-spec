@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hec.DssInternal
+namespace Hec.Dss.IO
 {
 	/// <summary>
 	/// zdssKeys are positions in the main file table, ifltab, for
