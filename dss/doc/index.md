@@ -19,9 +19,9 @@ The Header is followed by the file hash array (hash table).  The hash of a pathn
 <br>
 example: [0, 0, 0, 0, ... ,11172,[5276](pathname-bins.md),0,0, 10972,...  ]
 
-The [pathname bin](pathname-bins.md) contains meta-data for each pathname that hashes/point to that pathanme bin.  The meta-data for each bin item includes a pathname hash, status, record type, and file address to the record information.
+The [pathname bin](pathname-bins.md) contains meta-data for each pathname that hashes/point to that pathanme bin.  The meta-data for each bin item includes a pathname hash, status, record type, and file address to the [record information](record-info.md).  The record information contains high level information and addresses to other headers and data areas for that record.  These headers and data are record type specific.  For example for time series data the [internal Header](internal-header-time-series.md) address contains length of the values array,  compression information, block starting and ending positions, units, type, and time zone.
 
 
-The record information is 
+
 
 
