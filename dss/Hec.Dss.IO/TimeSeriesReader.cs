@@ -6,19 +6,28 @@ using System.Threading.Tasks;
 
 namespace Hec.Dss.IO
 {
-   internal class TimeSeriesRecord
+   internal class TimeSeriesReader
    {
       RecordInfo recordInfo;
       ByteReader reader;
       TimeSeriesInternalHeader internalHeader;
-      public TimeSeriesRecord(RecordInfo r, ByteReader reader)
+      public TimeSeriesReader(RecordInfo r, ByteReader reader)
       {
          recordInfo = r;
          this.reader = reader;
          var rawInternalHeader= reader(r.InternalHeaderAddress.Address, r.InternalHeaderAddress.Size);
-         internalHeader = new TimeSeriesInternalHeader(rawInternalHeader); 
+         internalHeader = new TimeSeriesInternalHeader(rawInternalHeader,r); 
          
-        
+         if( internalHeader.ValuesCompressionFlag == 1)
+         {
+         //   r.InternalHeaderAddress2.Address
+
+         }
+         // User Header may have supplemental -- or vertical datum
+         //RecordInfo.InternalHeaderAddress2.
+         //r.Values1Address.Address
+         /// First Data Area
+
       }
       public double[] Values
       {
