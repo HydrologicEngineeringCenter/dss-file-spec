@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,16 +12,21 @@ namespace Hec.Dss.IO
       RecordInfo recordInfo;
       ByteReader reader;
       TimeSeriesInternalHeader internalHeader;
+      BitArray compressionBits;
       public TimeSeriesReader(RecordInfo r, ByteReader reader)
       {
          recordInfo = r;
          this.reader = reader;
          var rawInternalHeader= reader(r.InternalHeaderAddress.Address, r.InternalHeaderAddress.Size);
-         internalHeader = new TimeSeriesInternalHeader(rawInternalHeader,r); 
-         
-         if( internalHeader.ValuesCompressionFlag == 1)
+         internalHeader = new TimeSeriesInternalHeader(rawInternalHeader,r);
+         if (internalHeader.ValuesCompressionFlag == (int)TimeSeriesCompression.RepeatingValue)
          {
-         //   r.InternalHeaderAddress2.Address
+            var compressionBytes = reader(r.InternalHeaderAddress2.Address, r.InternalHeaderAddress2.Size);
+            compressionBits = new BitArray(compressionBytes);
+            foreach (bool item in compressionBits)
+            {
+               Console.Write(item ? "1 " : "0 ");
+            }
 
          }
          // User Header may have supplemental -- or vertical datum
