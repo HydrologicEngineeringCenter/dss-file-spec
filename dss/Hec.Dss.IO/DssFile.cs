@@ -71,6 +71,7 @@ namespace Hec.Dss.IO
          RecordInfo info = GetRecordInfo(path);
          if (info.RecordType == RecordType.RegularTimeSeries)
          {
+            Console.WriteLine("Reading TimeSeries '"+path+"'");
             TimeSeriesReader ts = new TimeSeriesReader(info, ReadBytes);
          }
       }

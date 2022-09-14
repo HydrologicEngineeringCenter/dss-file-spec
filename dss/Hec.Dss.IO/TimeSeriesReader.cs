@@ -17,12 +17,13 @@ namespace Hec.Dss.IO
       {
          recordInfo = r;
          this.reader = reader;
-         var rawInternalHeader= reader(r.InternalHeaderAddress.Address, r.InternalHeaderAddress.Size);
+         var rawInternalHeader= reader(r.InternalHeader.Address, r.InternalHeader.Size);
          internalHeader = new TimeSeriesInternalHeader(rawInternalHeader,r);
          if (internalHeader.ValuesCompressionFlag == (int)TimeSeriesCompression.RepeatingValue)
          {
-            var compressionBytes = reader(r.InternalHeaderAddress2.Address, r.InternalHeaderAddress2.Size);
+            var compressionBytes = reader(r.InternalHeader2.Address, r.InternalHeader2.Size,4);
             compressionBits = new BitArray(compressionBytes);
+            Console.WriteLine("compressionBits.Length=" + compressionBits.Length);
             foreach (bool item in compressionBits)
             {
                Console.Write(item ? "1 " : "0 ");
@@ -41,7 +42,7 @@ namespace Hec.Dss.IO
          {
             double[] rval = new double[recordInfo.NumberOfValues];
             
-            byte[] data = reader(recordInfo.Values1Address.Address, recordInfo.NumberOfValues);
+            byte[] data = reader(recordInfo.Values1.Address, recordInfo.NumberOfValues);
             var d = new Decoder(data);
             for (int i = 0; i < recordInfo.NumberOfValues; i++)
             {

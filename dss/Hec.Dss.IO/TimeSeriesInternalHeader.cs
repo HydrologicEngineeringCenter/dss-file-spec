@@ -71,7 +71,7 @@ namespace Hec.Dss.IO
          inotesCompressionFlag  = d.Integer(start, offset: 4* INT_HEAD_inotesCompressionFlag);
          CnotesLength           = d.Integer(start, offset: 4* INT_HEAD_cnotesLength);
          ValueElementSize       = d.Integer(start, offset: 4* INT_HEAD_valueElementSize);
-         int len = recordInfo.InternalHeaderAddress.Size - INT_HEAD_units;
+         int len = recordInfo.InternalHeader.Size - INT_HEAD_units;
          if (len > 1)
          {
             Units               = d.String(start, len, offset: 4 * INT_HEAD_units).Trim();
