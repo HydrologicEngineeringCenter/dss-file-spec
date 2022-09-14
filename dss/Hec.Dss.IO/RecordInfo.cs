@@ -147,7 +147,7 @@ namespace Hec.Dss.IO
             }
         }
 
-        public AddressInfo InternalHeaderAddress
+        public AddressInfo InternalHeader
         {
             get
             {
@@ -155,7 +155,7 @@ namespace Hec.Dss.IO
                                               kinfoInternalHeadNumber);
             }
         }
-        public AddressInfo InternalHeaderAddress2
+        public AddressInfo InternalHeader2
         {
             get
             {
@@ -163,7 +163,7 @@ namespace Hec.Dss.IO
                                               kinfoHeader2Number);
             }
         }
-        public AddressInfo UserHeaderAddress
+        public AddressInfo UserHeader
         {
             get
             {
@@ -171,7 +171,7 @@ namespace Hec.Dss.IO
                                               kinfoUserHeadNumber);
             }
         }
-        public AddressInfo Values1Address
+        public AddressInfo Values1
         {
             get
             {
@@ -179,7 +179,7 @@ namespace Hec.Dss.IO
                                               kinfoValues1Number);
             }
         }
-        public AddressInfo Values2Address
+        public AddressInfo Values2
         {
             get
             {
@@ -187,7 +187,7 @@ namespace Hec.Dss.IO
                                               kinfoValues2Number);
             }
         }
-        public AddressInfo Values3Address
+        public AddressInfo Values3
         {
             get
             {

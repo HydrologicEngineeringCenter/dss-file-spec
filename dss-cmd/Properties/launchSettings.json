@@ -2,12 +2,13 @@
   "profiles": {
     "dss-cmd": {
       "commandName": "Project",
-      "commandLineArgs": "sample7.dss  \"//SACRAMENTO/PRECIP-INC/01Jan1877/1Day/OBS/\"",
-      "workingDirectory": "C:\\project\\dss-file-spec\\data",
+      "commandLineArgs": "sample7a.dss  \"/GREEN RIVER/GLENFIR/FLOW/01Apr1992/1Hour/OBS/\"",
+      "workingDirectory": "C:\\tmp",
       "environmentVariables": {
         "AWS_REGION": "us-west-1",
         "AWS_PROFILE": "dotnet-test"
-      }
+      },
+      "remoteDebugEnabled": false
     }
   }
 }

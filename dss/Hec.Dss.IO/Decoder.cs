@@ -15,20 +15,20 @@ namespace Hec.Dss.IO
             this.data = data;
         }
        
-        public string String(int word, int count, int wordSize = 8)
+        public string String(int word, int count, int wordSize = 8,int offset=0)
         {
             //var z =BitConverter.ToString(permanantSection, keys.kdss, 4);
-            var rval = System.Text.Encoding.ASCII.GetString(data, word * wordSize, count);
+            var rval = System.Text.Encoding.ASCII.GetString(data, word * wordSize+offset, count);
             return rval;
         }
-        public int Integer(long word, int wordSize = 8)
+        public int Integer(long word, int wordSize = 8, int offset=0)
         {
-            return BitConverter.ToInt32(data, (int)word * wordSize);
+            return BitConverter.ToInt32(data, (int)word * wordSize+offset);
         }
         public (int, int) Integers(long word, int wordSize = 8)
         {
-            var a = BitConverter.ToInt32(data, (int)word * wordSize);
-            var b = BitConverter.ToInt32(data, (int)word * wordSize + 4);
+         var a = Integer(word, wordSize);
+         var b = Integer(word, wordSize, 4);
             return (a, b);
         }
         public long Long(long word, int wordSize = 8)

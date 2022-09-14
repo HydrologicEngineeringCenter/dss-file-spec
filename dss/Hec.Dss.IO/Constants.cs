@@ -9,7 +9,7 @@ namespace Hec.Dss.IO
 {
    delegate byte[] ByteReader(long wordOffset, int wordCount, int wordSize = 8);
    enum RecordStatus { Unused = 0, Good = 1, Alias = 2, Deleted = 11, Renamed = 12 };
-
+   enum TimeSeriesCompression { None=0, RepeatingValue=1, ConstantValue=2 };   
     enum RecordType { RegularTimeSeries = 100, IrregularTimeSeries = 110 }
 
    class Constants

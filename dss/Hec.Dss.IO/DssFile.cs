@@ -33,6 +33,9 @@ namespace Hec.Dss.IO
          if( headerSize != 100)
             throw new Exception("Invalid DSS version 7 file.  Expected Header size of 100");
 
+         // 77265 -- to do -- onlu support that version or higher..
+
+         Console.WriteLine("Reading " + Path.GetFullPath(fileName));
          fileHeader = new FileHeader(new Decoder(ReadBytes(0, headerSize)));
 
          tableHash = new Decoder(ReadBytes(fileHeader.HashTableAddress,fileHeader.HashSize));
@@ -68,7 +71,8 @@ namespace Hec.Dss.IO
          RecordInfo info = GetRecordInfo(path);
          if (info.RecordType == RecordType.RegularTimeSeries)
          {
-            TimeSeriesRecord ts = new TimeSeriesRecord(info, ReadBytes);
+            Console.WriteLine("Reading TimeSeries '"+path+"'");
+            TimeSeriesReader ts = new TimeSeriesReader(info, ReadBytes);
          }
       }
       RecordInfo GetRecordInfo(string path)
@@ -77,6 +81,10 @@ namespace Hec.Dss.IO
          Console.WriteLine("path bin block size: " + fileHeader.BinBlockSize);
          var address = fileHashTable[addressToHash];
          Console.WriteLine("bin address:" + address);
+         if( address == 0)
+         {
+            throw new Exception("Record not Found'"+path+"'");
+         }
          var bin = new BinBlock(address, fileHeader.BinSize, ReadBytes);
          var binItem = bin.FindBinItem(path);
 
