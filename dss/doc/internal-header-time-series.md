@@ -8,7 +8,7 @@
 |8514|Number Profile Depths|0|
 |8515|Block position of first valid value|504|
 |8515|Block position of last valid value|719|
-|8516|Values Array length|174|
+|8516|Values Array length|174 (compressed)|
 |8516|Length of each value, ints|1|
 |8517|Length of each value element|1|
 |8517|Values Compession Flag|1|
