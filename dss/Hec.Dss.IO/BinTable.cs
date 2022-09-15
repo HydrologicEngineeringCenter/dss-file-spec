@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Hec.Dss.IO
 {
-   internal class BinBlock
+   /// <summary>
+   /// A BinTable contains pathnames that have the same TableHash
+   /// </summary>
+   internal class BinTable
    {
 
       const int kbinHash = 0;
@@ -24,7 +27,7 @@ namespace Hec.Dss.IO
       private Decoder decoder;
       private long startAddress = 0;
       private int binBlockSize = 0;
-      public BinBlock(long startAddress, int binBlockSize, ByteReader reader )
+      public BinTable(long startAddress, int binBlockSize, ByteReader reader )
       {
          this.startAddress = startAddress;
          this.binBlockSize = binBlockSize;

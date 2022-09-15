@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Hec.Dss.IO
 {
+   /// <summary>
+   /// FileHeader is the first 100 
+   /// </summary>
    internal class FileHeader
    {
       private Decoder decoder;

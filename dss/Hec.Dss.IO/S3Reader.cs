@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Hec.Dss.IO
 {
+   /// <summary>
+   /// S3Reader supports reading a range of bytes from a S3 object
+   /// </summary>
    public class S3Reader
    {
       // Specify your bucket region (an example region is shown).

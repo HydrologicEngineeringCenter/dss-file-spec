@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Hec.Dss.IO
 {
-    internal class Decoder
+   /// <summary>
+   /// Decoder is used to convert byte arrays into different types such as integers and Strings.
+   /// </summary>
+   internal class Decoder
     {
         byte[] data;
 

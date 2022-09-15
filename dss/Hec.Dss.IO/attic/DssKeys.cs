@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hec.Dss.IO
+namespace Hec.Dss.Attic
 {
 	/// <summary>
 	/// zdssKeys are positions in the main file table, ifltab, for
@@ -13,14 +13,14 @@ namespace Hec.Dss.IO
 	//  becomes corrupt (from something overwriting it in memory)
 	/// 
 	/// </summary>
-	internal class DssKeys
+	internal class DssKeys111
   {
-    public DssKeys()
+    public DssKeys111()
     {
 			init(this);
     }
 
-    private void init(DssKeys zdssKeys)
+    private void init(DssKeys111 zdssKeys)
     {
 			//  knumVersion is the numerical version number (i.e., 7) so applications
 			//  can quickly tell what version is being used

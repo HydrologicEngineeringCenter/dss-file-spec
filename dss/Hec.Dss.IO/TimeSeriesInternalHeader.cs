@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Hec.Dss.IO
 {
-
+   /// <summary>
+   /// TimeSeriesInternalHeader supports reading the timeseries storage information
+   /// This layer defines how to read time series data.
+   /// </summary>
    internal class TimeSeriesInternalHeader
    {
       //  Time series internal header

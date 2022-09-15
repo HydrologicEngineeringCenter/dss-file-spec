@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace Hec.Dss.IO
 {
+   /// <summary>
+   /// HashUtility has functions for the two hashes used in DSS.
+   /// </summary>
    internal class HashUtility
    {
+      /// <summary>
+      /// TableHash is used as the first level hash of a dss path.
+      /// This hash is in the range [0...maxHash]
+      /// </summary>
+      /// <param name="pathname"></param>
+      /// <param name="maxHash"></param>
+      /// <returns></returns>
       public static long TableHash(string pathname,int maxHash)
       {
          //string expression = ".*(c:\\d{6})|.*/$";
@@ -72,6 +82,15 @@ namespace Hec.Dss.IO
 
 
       }
+      /// <summary>
+      /// PathHash is on of the entries in a BinItem.
+      /// It provdes ability to compare paths by a number representation.
+      /// 
+      /// example pathHash result for  the path: //SACRAMENTO/PRECIP-INC/01Jan1879/1Day/OBS/     
+      /// is  -5795173172863832242
+      /// </summary>
+      /// <param name="path"></param>
+      /// <returns></returns>
       public static long PathHash(string path)
       {
          long pathHash = 0;

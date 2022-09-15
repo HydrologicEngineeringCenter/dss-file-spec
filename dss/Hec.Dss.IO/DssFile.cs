@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Hec.Dss.IO
 {
+   /// <summary>
+   /// DssFile has an API to read TimeSeries data from a DSS file
+   /// 
+   /// </summary>
    public class DssFile
    {
 
@@ -51,7 +55,7 @@ namespace Hec.Dss.IO
             var address = fileHashTable[i];
             if( address!=0)
             { // get bin block at this address
-               BinBlock block = new BinBlock(address, fileHeader.BinBlockSize, ReadBytes);
+               BinTable block = new BinTable(address, fileHeader.BinBlockSize, ReadBytes);
                foreach (BinItem item in block.GetBins())
                {
                   if (item.Valid)
@@ -85,7 +89,7 @@ namespace Hec.Dss.IO
          {
             throw new Exception("Record not Found'"+path+"'");
          }
-         var bin = new BinBlock(address, fileHeader.BinSize, ReadBytes);
+         var bin = new BinTable(address, fileHeader.BinSize, ReadBytes);
          var binItem = bin.FindBinItem(path);
 
          int wordstoRead = RecordInfo.infoSize + WordMath.WordsInString(path);
