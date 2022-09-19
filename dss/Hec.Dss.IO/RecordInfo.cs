@@ -45,7 +45,7 @@ namespace Hec.Dss.IO
 
         //     First points to the Julian date of the first valid data, Last, last valid data
         //  (non-missing) for times series data.  0 if not calculated or other
-        public static readonly int kinfoFirstDate = kinfoProgram + WordMath.StringLengthToWords(Constants.MAX_PROGRAM_NAME_LENGTH);
+        public static readonly int kinfoFirstDate = kinfoProgram + WordMath.IntegerLengthToWords(Constants.MAX_PROGRAM_NAME_LENGTH);
 
         public static readonly int kinfoLastDate = kinfoFirstDate + 1;
 
@@ -124,7 +124,7 @@ namespace Hec.Dss.IO
         public static readonly int infoSize = kinfoPathname - kinfoFlag;
 
         //  Max info size allocated (includes 20 spots for alias addresses)
-        public static readonly int maxInfoSize = infoSize + WordMath.StringLengthToWords(Constants.MAX_PATHNAME_SIZE) + 20;
+        public static readonly int maxInfoSize = infoSize + WordMath.IntegerLengthToWords(Constants.MAX_PATHNAME_SIZE) + 20;
 
 
         #endregion
@@ -176,7 +176,7 @@ namespace Hec.Dss.IO
             get
             {
                 return decoder.GetAddressInfo(kinfoValues1Address,
-                                              kinfoValues1Number);
+                                              kinfoValues1Number,4);
             }
         }
         public AddressInfo Values2

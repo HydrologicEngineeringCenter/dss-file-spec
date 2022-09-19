@@ -21,14 +21,26 @@ namespace Hec.Dss.IO
          internalHeader = new TimeSeriesInternalHeader(rawInternalHeader,r);
          if (internalHeader.ValuesCompressionFlag == (int)TimeSeriesCompression.RepeatingValue)
          {
-            var compressionBytes = reader(r.InternalHeader2.Address, r.InternalHeader2.Size,4);
+            var compressionBytes = reader(r.InternalHeader2.Address, r.InternalHeader2.Size);
             compressionBits = new BitArray(compressionBytes);
-            Console.WriteLine("compressionBits.Length=" + compressionBits.Length);
-            foreach (bool item in compressionBits)
+            int size = internalHeader.BlockEndPosition - internalHeader.BlockStartPosition + 1;
+            size = Math.Min(size, compressionBits.Length);
+            for (int i = 0; i < size; i++)
             {
-               Console.Write(item ? "1 " : "0 ");
+               Console.Write(compressionBits[i] ? "1 " : "0 ");
             }
-
+            // values are in data area
+            var rawValues = reader(recordInfo.Values1.Address, recordInfo.Values1.Size);
+            Decoder d = new Decoder(rawValues);
+            bool storedAsFloats = recordInfo.RecordType == RecordType.RegularTimeSeries ? true : false;
+            var x = d.DoubleArray(storedAsFloats);
+            var values = Compression.UnCompress(x, compressionBits);
+            Console.WriteLine();
+            for (int i = 0; i < values.Length; i++)
+            {
+               Console.WriteLine(i+" , "+values[i]);
+            }
+            
          }
          // User Header may have supplemental -- or vertical datum
          //RecordInfo.InternalHeaderAddress2.
